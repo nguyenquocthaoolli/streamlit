@@ -5,3 +5,4 @@ python-dotenv
 gcsfs
 # Direct pypi install coming soon
 git+https://github.com/streamlit/files-connection
+google-cloud-vision
