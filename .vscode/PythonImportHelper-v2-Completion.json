@@ -1,0 +1,280 @@
+[
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "vision",
+        "importPath": "google.cloud",
+        "description": "google.cloud",
+        "isExtraImport": true,
+        "detail": "google.cloud",
+        "documentation": {}
+    },
+    {
+        "label": "types",
+        "importPath": "google.cloud.vision_v1",
+        "description": "google.cloud.vision_v1",
+        "isExtraImport": true,
+        "detail": "google.cloud.vision_v1",
+        "documentation": {}
+    },
+    {
+        "label": "service_account",
+        "importPath": "google.oauth2",
+        "description": "google.oauth2",
+        "isExtraImport": true,
+        "detail": "google.oauth2",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "Chroma",
+        "importPath": "langchain.vectorstores",
+        "description": "langchain.vectorstores",
+        "isExtraImport": true,
+        "detail": "langchain.vectorstores",
+        "documentation": {}
+    },
+    {
+        "label": "OpenAIEmbeddings",
+        "importPath": "langchain.embeddings.openai",
+        "description": "langchain.embeddings.openai",
+        "isExtraImport": true,
+        "detail": "langchain.embeddings.openai",
+        "documentation": {}
+    },
+    {
+        "label": "TfidfVectorizer",
+        "importPath": "sklearn.feature_extraction.text",
+        "description": "sklearn.feature_extraction.text",
+        "isExtraImport": true,
+        "detail": "sklearn.feature_extraction.text",
+        "documentation": {}
+    },
+    {
+        "label": "cosine_similarity",
+        "importPath": "sklearn.metrics.pairwise",
+        "description": "sklearn.metrics.pairwise",
+        "isExtraImport": true,
+        "detail": "sklearn.metrics.pairwise",
+        "documentation": {}
+    },
+    {
+        "label": "img_captioning2",
+        "kind": 2,
+        "importPath": "image_details",
+        "description": "image_details",
+        "peekOfCode": "def img_captioning2(filecontent):\n    api_url = os.getenv(\"IMUN_URL2\", \"\")\n    # q = os.getenv(\"IMUN_PARAMS2\", \"\")\n    api_url += \"?\" + \"api-version=2023-02-01-preview&model-version=latest&features=caption\"\n    # file_path = \"/home/ubuntu/Downloads/1613459883.noatek_password_dean_sig.png\"\n    # with open(file_path, \"rb\") as file:\n    headers = {\n        \"Content-Type\": \"application/octet-stream\",\n        \"Ocp-Apim-Subscription-Key\": os.getenv(\"IMUN_SUBSCRIPTION_KEY2\", \"\"),\n    }",
+        "detail": "image_details",
+        "documentation": {}
+    },
+    {
+        "label": "perform_ocr",
+        "kind": 2,
+        "importPath": "image_details",
+        "description": "image_details",
+        "peekOfCode": "def perform_ocr(filecontent):\n    client = vision.ImageAnnotatorClient(credentials=credentials)\n    # content = image.read()\n    image = types.Image(content=filecontent)\n    response = client.text_detection(image=image)\n    texts = response.text_annotations\n    # print(42, texts)\n    if texts:\n        return texts[0].description\n    return None",
+        "detail": "image_details",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "image_details",
+        "description": "image_details",
+        "peekOfCode": "def main():\n    st.title(\"Image Details\")\n    # print(st.secrets)\n    # Upload image file\n    uploaded_file = st.file_uploader(\"Upload an image\", type=[\"jpg\", \"jpeg\", \"png\"])\n    caption_enabled = st.checkbox(\"Generate Caption\")\n    ocr_enabled = st.checkbox(\"Perform OCR\")\n    if uploaded_file is not None:\n        filecontent = uploaded_file.read()\n        # print(49, filecontent)",
+        "detail": "image_details",
+        "documentation": {}
+    },
+    {
+        "label": "credentials",
+        "kind": 5,
+        "importPath": "image_details",
+        "description": "image_details",
+        "peekOfCode": "credentials = service_account.Credentials.from_service_account_info(\n    dict(st.secrets[\"connection\"][\"gcs\"]), scopes=[\"https://www.googleapis.com/auth/cloud-platform\"]\n)\ndef img_captioning2(filecontent):\n    api_url = os.getenv(\"IMUN_URL2\", \"\")\n    # q = os.getenv(\"IMUN_PARAMS2\", \"\")\n    api_url += \"?\" + \"api-version=2023-02-01-preview&model-version=latest&features=caption\"\n    # file_path = \"/home/ubuntu/Downloads/1613459883.noatek_password_dean_sig.png\"\n    # with open(file_path, \"rb\") as file:\n    headers = {",
+        "detail": "image_details",
+        "documentation": {}
+    },
+    {
+        "label": "iterations",
+        "kind": 5,
+        "importPath": "myfile",
+        "description": "myfile",
+        "peekOfCode": "iterations = st.sidebar.slider(\"Level of detail\", 2, 20, 10, 1)\nseparation = st.sidebar.slider(\"Separation\", 0.7, 2.0, 0.7885)\n# Non-interactive elements return a placeholder to their location\n# in the app. Here we're storing progress_bar to update it later.\nprogress_bar = st.sidebar.progress(0)\n# These two elements will be filled in later, so we create a placeholder\n# for them using st.empty()\nframe_text = st.sidebar.empty()\nimage = st.empty()\nm, n, s = 960, 640, 400",
+        "detail": "myfile",
+        "documentation": {}
+    },
+    {
+        "label": "separation",
+        "kind": 5,
+        "importPath": "myfile",
+        "description": "myfile",
+        "peekOfCode": "separation = st.sidebar.slider(\"Separation\", 0.7, 2.0, 0.7885)\n# Non-interactive elements return a placeholder to their location\n# in the app. Here we're storing progress_bar to update it later.\nprogress_bar = st.sidebar.progress(0)\n# These two elements will be filled in later, so we create a placeholder\n# for them using st.empty()\nframe_text = st.sidebar.empty()\nimage = st.empty()\nm, n, s = 960, 640, 400\nx = np.linspace(-m / s, m / s, num=m).reshape((1, m))",
+        "detail": "myfile",
+        "documentation": {}
+    },
+    {
+        "label": "progress_bar",
+        "kind": 5,
+        "importPath": "myfile",
+        "description": "myfile",
+        "peekOfCode": "progress_bar = st.sidebar.progress(0)\n# These two elements will be filled in later, so we create a placeholder\n# for them using st.empty()\nframe_text = st.sidebar.empty()\nimage = st.empty()\nm, n, s = 960, 640, 400\nx = np.linspace(-m / s, m / s, num=m).reshape((1, m))\ny = np.linspace(-n / s, n / s, num=n).reshape((n, 1))\nfor frame_num, a in enumerate(np.linspace(0.0, 4 * np.pi, 100)):\n    # Here were setting value for these two elements.",
+        "detail": "myfile",
+        "documentation": {}
+    },
+    {
+        "label": "frame_text",
+        "kind": 5,
+        "importPath": "myfile",
+        "description": "myfile",
+        "peekOfCode": "frame_text = st.sidebar.empty()\nimage = st.empty()\nm, n, s = 960, 640, 400\nx = np.linspace(-m / s, m / s, num=m).reshape((1, m))\ny = np.linspace(-n / s, n / s, num=n).reshape((n, 1))\nfor frame_num, a in enumerate(np.linspace(0.0, 4 * np.pi, 100)):\n    # Here were setting value for these two elements.\n    progress_bar.progress(frame_num)\n    frame_text.text(\"Frame %i/100\" % (frame_num + 1))\n    # Performing some fractal wizardry.",
+        "detail": "myfile",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "kind": 5,
+        "importPath": "myfile",
+        "description": "myfile",
+        "peekOfCode": "image = st.empty()\nm, n, s = 960, 640, 400\nx = np.linspace(-m / s, m / s, num=m).reshape((1, m))\ny = np.linspace(-n / s, n / s, num=n).reshape((n, 1))\nfor frame_num, a in enumerate(np.linspace(0.0, 4 * np.pi, 100)):\n    # Here were setting value for these two elements.\n    progress_bar.progress(frame_num)\n    frame_text.text(\"Frame %i/100\" % (frame_num + 1))\n    # Performing some fractal wizardry.\n    c = separation * np.exp(1j * a)",
+        "detail": "myfile",
+        "documentation": {}
+    },
+    {
+        "label": "x",
+        "kind": 5,
+        "importPath": "myfile",
+        "description": "myfile",
+        "peekOfCode": "x = np.linspace(-m / s, m / s, num=m).reshape((1, m))\ny = np.linspace(-n / s, n / s, num=n).reshape((n, 1))\nfor frame_num, a in enumerate(np.linspace(0.0, 4 * np.pi, 100)):\n    # Here were setting value for these two elements.\n    progress_bar.progress(frame_num)\n    frame_text.text(\"Frame %i/100\" % (frame_num + 1))\n    # Performing some fractal wizardry.\n    c = separation * np.exp(1j * a)\n    Z = np.tile(x, (n, 1)) + 1j * np.tile(y, (1, m))\n    C = np.full((n, m), c)",
+        "detail": "myfile",
+        "documentation": {}
+    },
+    {
+        "label": "y",
+        "kind": 5,
+        "importPath": "myfile",
+        "description": "myfile",
+        "peekOfCode": "y = np.linspace(-n / s, n / s, num=n).reshape((n, 1))\nfor frame_num, a in enumerate(np.linspace(0.0, 4 * np.pi, 100)):\n    # Here were setting value for these two elements.\n    progress_bar.progress(frame_num)\n    frame_text.text(\"Frame %i/100\" % (frame_num + 1))\n    # Performing some fractal wizardry.\n    c = separation * np.exp(1j * a)\n    Z = np.tile(x, (n, 1)) + 1j * np.tile(y, (1, m))\n    C = np.full((n, m), c)\n    M = np.full((n, m), True, dtype=bool)",
+        "detail": "myfile",
+        "documentation": {}
+    },
+    {
+        "label": "SearchQ",
+        "kind": 6,
+        "importPath": "qa",
+        "description": "qa",
+        "peekOfCode": "class SearchQ:\n    def __init__(self):\n        embeddings = OpenAIEmbeddings()\n        self.keys = list(faq.keys())\n        self.docsearch = Chroma.from_texts(self.keys, embeddings, metadatas=[{\"i\":i} for i in range(len(self.keys))])\n    def search(self, q):\n        docs = self.docsearch.similarity_search(q)\n        for v in docs:\n            print(v.page_content, v.metadata)\n        return ''",
+        "detail": "qa",
+        "documentation": {}
+    },
+    {
+        "label": "Search2",
+        "kind": 6,
+        "importPath": "qa",
+        "description": "qa",
+        "peekOfCode": "class Search2:\n    def __init__(self):\n        self.vectorizer = TfidfVectorizer()\n        self.keys = list(faq.keys())\n        self.tfidf_matrix = self.vectorizer.fit_transform(self.keys)\n    def search(self, q):\n        user_question_vector = self.vectorizer.transform([q])\n        similarities = cosine_similarity(user_question_vector, self.tfidf_matrix)\n        print(similarities[0])\n        ind = max(range(len(self.keys)), key=lambda i: similarities[0][i])",
+        "detail": "qa",
+        "documentation": {}
+    },
+    {
+        "label": "run_app",
+        "kind": 2,
+        "importPath": "qa",
+        "description": "qa",
+        "peekOfCode": "def run_app():\n    st.title(\"Question and Answer App\")\n    st.write(\"Welcome! Ask a question and get an answer.\")\n    # searchQ = SearchQ()\n    searchQ = Search2()\n    # Display the list of available questions\n    # question = st.selectbox(\"Select a question:\", list(faq.keys()))\n    question = st.text_input(\"Ask your question:\")\n    question = searchQ.search(question)\n    # Retrieve and display the answer for the selected question",
+        "detail": "qa",
+        "documentation": {}
+    },
+    {
+        "label": "faq",
+        "kind": 5,
+        "importPath": "qa",
+        "description": "qa",
+        "peekOfCode": "faq = {\n    \"What is Streamlit?\": \"Streamlit is an open-source Python library that makes it easy to create custom web apps for machine learning and data science.\",\n    \"How do I install Streamlit?\": \"You can install Streamlit using pip: `pip install streamlit`.\",\n    \"Can I deploy Streamlit apps?\": \"Yes, you can deploy Streamlit apps to various platforms including Heroku, AWS, and others.\",\n    \"What are the main features of Streamlit?\": \"Streamlit offers a simple and intuitive API, automatic app updates, real-time interactive widgets, and easy sharing of apps.\",\n}\nclass SearchQ:\n    def __init__(self):\n        embeddings = OpenAIEmbeddings()\n        self.keys = list(faq.keys())",
+        "detail": "qa",
+        "documentation": {}
+    }
+]

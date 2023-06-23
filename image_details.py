@@ -5,9 +5,17 @@ import os
 import requests
 from google.cloud import vision
 from google.cloud.vision_v1 import types
+from google.oauth2 import service_account
+import json
 
 from dotenv import load_dotenv
 load_dotenv()
+
+# print(14, json.dumps(dict(st.secrets["connection"]["gcs"])))
+
+credentials = service_account.Credentials.from_service_account_info(
+    dict(st.secrets["connection"]["gcs"]), scopes=["https://www.googleapis.com/auth/cloud-platform"]
+)
 
 def img_captioning2(filecontent):
     api_url = os.getenv("IMUN_URL2", "")
@@ -34,7 +42,7 @@ def img_captioning2(filecontent):
         raise Exception("API request failed with status code {}: {}".format(response.status_code, error_message))
 
 def perform_ocr(filecontent):
-    client = vision.ImageAnnotatorClient()
+    client = vision.ImageAnnotatorClient(credentials=credentials)
     # content = image.read()
     image = types.Image(content=filecontent)
     response = client.text_detection(image=image)
@@ -48,6 +56,8 @@ def perform_ocr(filecontent):
 
 def main():
     st.title("Image Details")
+
+    # print(st.secrets)
 
     # Upload image file
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
