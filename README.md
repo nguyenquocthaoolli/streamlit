@@ -1,0 +1,1 @@
+https://api.python.langchain.com/en/latest/modules/embeddings.html
