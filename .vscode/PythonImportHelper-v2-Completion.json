@@ -77,6 +77,15 @@
         "documentation": {}
     },
     {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
         "label": "load_dotenv",
         "importPath": "dotenv",
         "description": "dotenv",
@@ -156,7 +165,25 @@
         "kind": 2,
         "importPath": "image_details",
         "description": "image_details",
-        "peekOfCode": "def perform_ocr(filecontent):\n    client = vision.ImageAnnotatorClient(credentials=credentials)\n    # content = image.read()\n    image = types.Image(content=filecontent)\n    response = client.text_detection(image=image)\n    texts = response.text_annotations\n    # print(42, texts)\n    if texts:\n        return texts[0].description\n    return None",
+        "peekOfCode": "def perform_ocr(filecontent):\n    response = requests.post(maikadomain + \"/api/command/ocr\", headers={\"Authorization\":\"Bearer \" + os.getenv(\"MAIKA_TOKEN\")}, files={\n        \"file\": filecontent\n    })\n    if response.status_code==200:\n        response_data = response.json()\n        print(22, response_data)\n        return response_data[\"results\"]\n    else:\n        response_data = response.json()",
+        "detail": "image_details",
+        "documentation": {}
+    },
+    {
+        "label": "translate",
+        "kind": 2,
+        "importPath": "image_details",
+        "description": "image_details",
+        "peekOfCode": "def translate(text):\n    response = requests.post(maikadomain + \"/api/command/translate\", headers={\"Authorization\":\"Bearer \" + os.getenv(\"MAIKA_TOKEN\"), \n                                                                              'Content-Type': 'application/json'}, \n                                                                              data=json.dumps({\n        \"text\": text,\n        \"target_language\":\"vi\",\n    }))\n    if response.status_code==200:\n        return response.content.decode()\n    else:",
+        "detail": "image_details",
+        "documentation": {}
+    },
+    {
+        "label": "summarize",
+        "kind": 2,
+        "importPath": "image_details",
+        "description": "image_details",
+        "peekOfCode": "def summarize(text):\n    response = requests.post(maikadomain + \"/api/command/summarize\", headers={\n        \"Authorization\":\"Bearer \" + os.getenv(\"MAIKA_TOKEN\"), \n        'Content-Type': 'application/json'}, \n        data=json.dumps({\n        \"text\": text,\n        \"request_id\": str(uuid.uuid4())\n    }))\n    if response.status_code==200:\n        return response.content.decode()",
         "detail": "image_details",
         "documentation": {}
     },
@@ -165,7 +192,7 @@
         "kind": 2,
         "importPath": "image_details",
         "description": "image_details",
-        "peekOfCode": "def main():\n    st.title(\"Image Details\")\n    # print(st.secrets)\n    # Upload image file\n    uploaded_file = st.file_uploader(\"Upload an image\", type=[\"jpg\", \"jpeg\", \"png\"])\n    caption_enabled = st.checkbox(\"Generate Caption\")\n    ocr_enabled = st.checkbox(\"Perform OCR\")\n    if uploaded_file is not None:\n        filecontent = uploaded_file.read()\n        # print(49, filecontent)",
+        "peekOfCode": "def main():\n    st.title(\"Image Details\")\n    # print(st.secrets)\n    # Upload image file\n    uploaded_file = st.file_uploader(\"Upload an image\", type=[\"jpg\", \"jpeg\", \"png\"])\n    # caption_enabled = st.checkbox(\"Generate Caption\")\n    caption_enabled = False\n    # ocr_enabled = st.checkbox(\"Perform OCR\")\n    ocr_enabled = True\n    if ocr_enabled:",
         "detail": "image_details",
         "documentation": {}
     },
@@ -175,6 +202,15 @@
         "importPath": "image_details",
         "description": "image_details",
         "peekOfCode": "credentials = service_account.Credentials.from_service_account_info(\n    dict(st.secrets[\"connection\"][\"gcs\"]), scopes=[\"https://www.googleapis.com/auth/cloud-platform\"]\n)\ndef img_captioning2(filecontent):\n    api_url = os.getenv(\"IMUN_URL2\", \"\")\n    # q = os.getenv(\"IMUN_PARAMS2\", \"\")\n    api_url += \"?\" + \"api-version=2023-02-01-preview&model-version=latest&features=caption\"\n    # file_path = \"/home/ubuntu/Downloads/1613459883.noatek_password_dean_sig.png\"\n    # with open(file_path, \"rb\") as file:\n    headers = {",
+        "detail": "image_details",
+        "documentation": {}
+    },
+    {
+        "label": "maikadomain",
+        "kind": 5,
+        "importPath": "image_details",
+        "description": "image_details",
+        "peekOfCode": "maikadomain = \"https://stg-content-gateway.development.iviet.com\"\ndef perform_ocr(filecontent):\n    response = requests.post(maikadomain + \"/api/command/ocr\", headers={\"Authorization\":\"Bearer \" + os.getenv(\"MAIKA_TOKEN\")}, files={\n        \"file\": filecontent\n    })\n    if response.status_code==200:\n        response_data = response.json()\n        print(22, response_data)\n        return response_data[\"results\"]\n    else:",
         "detail": "image_details",
         "documentation": {}
     },
