@@ -1,10 +1,14 @@
-import wave
 import sys
 import pyaudio
-# from audio import play_audio, testaudio
 
 import struct
-import time
+import multiprocessing
+
+def queueToGenerator(q: multiprocessing.Queue):
+    while True:
+        v = q.get()
+        if v is None: return
+        yield v
     
 def extrac_header_data(header_data):
 
@@ -41,46 +45,35 @@ def extrac_header_data(header_data):
     print("Subchunk2 ID:", subchunk2_id)
     print("Subchunk2 Size:", subchunk2_size)
 
+    return {
+        "rate": sample_rate,
+        "channels": num_channels,
+        "format": pyaudio.get_format_from_width(bits_per_sample/8)
+    }
 
-stream_parameters = {
-    # 'rate': 44100,
-    'rate':22050,
-    'channels': 1,
-    # 'format': 2,
-    'output': True,
-    # 'frames_per_buffer': 1024
-}
 
 def play_audio(generator):
     p = pyaudio.PyAudio()
-    # pyaudio.
-    stream_parameters["format"] = p.get_format_from_width(2)
-    print(stream_parameters)
-    stream = p.open(**stream_parameters)
-    # stream = p.open()
+    stream = None
     for data in generator:
+        if not stream:
+            stream_parameters = extrac_header_data(data)
+            # stream_parameters["format"]=128
+            # print(stream_parameters)
+            stream = p.open(**stream_parameters, output=True, frames_per_buffer=1024)
+        # print(65, len(data))
         stream.write(data)
     stream.close()
     p.terminate()
 
 def testaudio():
     def gen():
-        with open('/home/ubuntu/Music/vi.wav', 'rb') as wf:
+        with open('/home/ubuntu/Music/enstream.wav', 'rb') as wf:
             while True:
                 x = wf.read(1024)
-                # time.sleep()
-                
-                # print(x, len(x))
-                # extrac_header_data(x)
-                # return 
                 if len(x)==0: return 
-                # print(len(x))
                 yield x
         
-        # with wave.open("/home/ubuntu/Music/vi.wav", 'rb') as wf:
-        #     x =  wf.readframes(1024)
-        #     print(26, len(x))
-        # print(27, 'close')
     play_audio(gen())
 
 if __name__ == "__main__":
