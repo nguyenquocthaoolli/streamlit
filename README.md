@@ -46,3 +46,9 @@ Subchunk2 Size: 291939
 python copy generator
 generator
 threading generator
+
+
+
+
+
+play ogg file: make request, then pipe to ogg123 - 
