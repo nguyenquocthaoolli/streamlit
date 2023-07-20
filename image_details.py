@@ -168,7 +168,7 @@ def speak(generator, locale):
     # threading.Thread(target=audio.play_audio, args=(gen,)).start()
 
 
-def main():
+def imageDetailPage():
     st.title("Image Details")
 
     # print(st.secrets)
