@@ -20,7 +20,7 @@ load_dotenv()
 # print(14, json.dumps(dict(st.secrets["connection"]["gcs"])))
 
 credentials = service_account.Credentials.from_service_account_info(
-    dict(st.secrets["connection-gcs"]),
+    dict(st.secrets["connection"]["gcs"]),
     scopes=["https://www.googleapis.com/auth/cloud-platform"],
 )
 

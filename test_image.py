@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 credentials = service_account.Credentials.from_service_account_info(
-    dict(st.secrets["connection-gcs"]), scopes=["https://www.googleapis.com/auth/cloud-platform"]
+    dict(st.secrets["connection"]["gcs"]), scopes=["https://www.googleapis.com/auth/cloud-platform"]
 )
 
 # def detect_document_text_with_confidence(full_text_annotation, min_confidence=0.9):
@@ -34,6 +34,12 @@ credentials = service_account.Credentials.from_service_account_info(
 #                         filtered_text_blocks.append((text, confidence))
 
 #     return filtered_text_blocks
+
+@st.cache_data
+def get_file_content(image_url):
+    response = requests.get(image_url)
+    file_content = response.content
+    return file_content
 
 def detect_document_text_with_confidence(full_text_annotation, min_block_conf = 0.0, min_paragraph_conf=0.9, min_word_conf=0.0):
     result=''
@@ -69,7 +75,6 @@ def detect_document_text_with_confidence(full_text_annotation, min_block_conf = 
     return result
 
 
-
 def ocr2(filecontent):
     client = vision.ImageAnnotatorClient(credentials=credentials)
     image = types.Image(content=filecontent)
@@ -103,13 +108,20 @@ def perform_ocr(filecontent):
     )
     if response.status_code == 200:
         response_data = response.json()
-        print(22, response_data)
+        # print(22, response_data)
         return response_data["results"], response_data["locale"]
     else:
         response_data = response.json()
         print(29, response_data)
         raise Exception(response_data["message"])
-# 
+@st.cache_data
+def ocr1_from_url(image_url):
+    filecontent = get_file_content(image_url)
+    return perform_ocr(filecontent)
+@st.cache_data
+def ocr2_from_url(image_url):
+    filecontent = get_file_content(image_url)
+    return ocr2(filecontent)
 
 def translate(text):
     response = requests.post(
@@ -139,10 +151,12 @@ def getUrls():
 min_block_conf = min_paragraph_conf = min_word_conf = 0.0
 
 
+
+
 def main_page():
     st.title("Test images")
     min_block_conf = st.sidebar.slider( label="min_block_conf", min_value=0.0, max_value=1.0, value=0.0, step=0.01, )
-    min_paragraph_conf = st.sidebar.slider( label="min_paragraph_conf", min_value=0.0, max_value=0.8, value=0.0, step=0.01, )
+    min_paragraph_conf = st.sidebar.slider( label="min_paragraph_conf", min_value=0.0, max_value=1.0, value=0.8, step=0.01, )
     min_word_conf = st.sidebar.slider( label="min_word_conf", min_value=0.0, max_value=1.0, value=0.8, step=0.01, )
 
 
@@ -151,9 +165,7 @@ def main_page():
 
     # Iterate over the image URLs and display the columns
     for image_url in image_urls:
-        response = requests.get(image_url)
-        # print(image_url, len(response.content))
-        file_content = response.content
+        file_content = get_file_content(image_url)
         col1, col2,col3 = st.columns(3)
         with col1:
             # st.subheader("Image")
@@ -161,10 +173,9 @@ def main_page():
             st.image(image, use_column_width=True)
 
         with col2:
-            # st.subheader("OCR Result")
-            ocr_results, locale = perform_ocr(file_content)
+            ocr_results, locale = ocr1_from_url(image_url)
             st.write(ocr_results)
-        ftannotation = ocr2(file_content)
+        ftannotation = ocr2_from_url(image_url)
         with col3:
             # ocr_results_2 = ocr2(file_content)
 
