@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 credentials = service_account.Credentials.from_service_account_info(
-    dict(st.secrets["connection"]["gcs"]), scopes=["https://www.googleapis.com/auth/cloud-platform"]
+    dict(st.secrets["connection-gcs"]), scopes=["https://www.googleapis.com/auth/cloud-platform"]
 )
 
 # def detect_document_text_with_confidence(full_text_annotation, min_confidence=0.9):
