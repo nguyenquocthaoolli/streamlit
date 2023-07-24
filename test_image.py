@@ -17,6 +17,9 @@ from multiprocessing import Queue
 from dotenv import load_dotenv
 load_dotenv()
 
+maikadomain = os.getenv("MAIKA_DOMAIN")
+
+
 credentials = service_account.Credentials.from_service_account_info(
     dict(st.secrets["connection"]["gcs"]), scopes=["https://www.googleapis.com/auth/cloud-platform"]
 )
@@ -92,12 +95,6 @@ def ocr2(filecontent):
     # return ' '.join(v[0] for v in detect_document_text_with_confidence(response.full_text_annotation))
     # return detect_document_text_with_confidence(response.full_text_annotation)
     return response.full_text_annotation
-
-
-
-
-maikadomain = "https://stg-content-gateway.development.iviet.com"
-# maikadomain = "http://localhost:3331"
 
 def perform_ocr(filecontent):
     response = requests.post(

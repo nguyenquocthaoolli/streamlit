@@ -17,6 +17,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+maikadomain = os.getenv("MAIKA_DOMAIN")
+
+
 # print(14, json.dumps(dict(st.secrets["connection"]["gcs"])))
 
 credentials = service_account.Credentials.from_service_account_info(
@@ -56,8 +59,6 @@ def img_captioning2(filecontent):
         )
 
 
-maikadomain = "https://stg-content-gateway.development.iviet.com"
-# maikadomain = "http://localhost:3331"
 
 
 def perform_ocr(filecontent):
