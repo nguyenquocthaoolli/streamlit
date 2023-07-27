@@ -142,8 +142,9 @@ def translate(text):
         return Exception(response_data["message"])
     
 def getUrls():
-    for i in range(0,8):
+    for i in range(0,4):
         yield f'https://storage.googleapis.com/maika-ai-ext/test/{i}.jpg'
+    yield 'https://storage.googleapis.com/maika-ai-ext/test/ocr.jpg'
 
 min_block_conf = min_paragraph_conf = min_word_conf = 0.0
 
@@ -152,9 +153,9 @@ min_block_conf = min_paragraph_conf = min_word_conf = 0.0
 
 def main_page():
     st.title("Test images")
-    min_block_conf = st.sidebar.slider( label="min_block_conf", min_value=0.0, max_value=1.0, value=0.0, step=0.01, )
-    min_paragraph_conf = st.sidebar.slider( label="min_paragraph_conf", min_value=0.0, max_value=1.0, value=0.8, step=0.01, )
-    min_word_conf = st.sidebar.slider( label="min_word_conf", min_value=0.0, max_value=1.0, value=0.8, step=0.01, )
+    min_block_conf = st.sidebar.slider( label="min_block_conf", min_value=0.0, max_value=1.0, value=0.0, step=0.05, )
+    min_paragraph_conf = st.sidebar.slider( label="min_paragraph_conf", min_value=0.0, max_value=1.0, value=0.8, step=0.05, )
+    min_word_conf = st.sidebar.slider( label="min_word_conf", min_value=0.0, max_value=1.0, value=0.7, step=0.05, )
 
 
     # Create a generator for the image URLs
