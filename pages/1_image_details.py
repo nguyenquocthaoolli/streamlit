@@ -176,8 +176,8 @@ def imageDetailPage():
 
     # Upload image file
     uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
-    # caption_enabled = st.checkbox("Generate Caption")
-    caption_enabled = False
+    caption_enabled = st.checkbox("Generate Caption")
+    # caption_enabled = False
     # ocr_enabled = st.checkbox("Perform OCR")
     ocr_enabled = True
     if ocr_enabled:
@@ -206,9 +206,11 @@ def imageDetailPage():
         st.image(image, caption="Uploaded Image", use_column_width=True)
 
         if caption_enabled:
+            print(209, "captioning")
             start_time = time.time()
             st.write(img_captioning2(filecontent))
             st.write("Execution Time:", time.time() - start_time, "seconds")
+            return 
         ocr = ""
         locale = "vi"
         if ocr_enabled:
@@ -269,5 +271,5 @@ def imageDetailPage():
         # st.write("Image Height:", image_height)
 
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    imageDetailPage()
