@@ -1,10 +1,8 @@
 import streamlit as st
-from pages.image_details import imageDetailPage
 from dotenv import load_dotenv
-import pages.test_image as test_image
-import pages.img_to_website as img_to_website
-
 load_dotenv()
+
+
 st.set_page_config(layout="wide")
 
 # def main():

@@ -13,10 +13,6 @@ import uuid
 import threading
 from multiprocessing import Queue
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 maikadomain = os.getenv("MAIKA_DOMAIN")
 
 
